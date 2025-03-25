@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: salesforce
+    database: raw  
+    schema: salesforce 
+    tables:
+      - name: leads
+
+  - name: sources
+    database: raw
+    schema: sources
+    tables:
+      - name: source_1
+      - name: source_2
+      - name: source_3

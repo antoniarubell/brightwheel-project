@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: base_leads_source_1
+    columns:
+      - name: phone
+        tests:
+          - unique
+          - not_null

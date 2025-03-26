@@ -1,17 +1,18 @@
+/* Grain of this table: one row per prospective lead per source. Ie. if multiple sources contain the same 
+lead info, there will be multiple rows for that lead in this table. */
+
 with all_prospective_leads as (
-    select * from {{ref('stg_prospective_leads_source_1')}}
-
+    select * from {{ref('stg_leads_source_1')}}
     union all 
-
-    select * from {{ref('stg_prospective_leads_source_2')}}
-
+    select * from {{ref('stg_leads_source_2')}}
     union all
-
-    select * from {{ref('stg_prospective_leads_source_3')}}
+    select * from {{ref('stg_leads_source_3')}}
 )
 
 select 
     --SOURCE IDENTIFIERS / METADATA
+    {{ dbt_utils.generate_surrogate_key(['l.primary_key',
+                                        'source_name']) }} AS source_lead_key,
     l.source_name,
     l.source_id,
     l.contact_name,
@@ -24,6 +25,10 @@ select
     l.postal_code,
     l.country,
     l.phone,
+    l.first_received_file_date,
+    l.first_received_file_name,
+    row_number() over (partition by l.phone_address_key 
+        order by l.first_received_file_date ASC) as is_first_received_lead,
     
     -- SALESFORCE FIELDS
     sf.id as salesforce_id,
@@ -33,15 +38,8 @@ select
     sf.is_converted,
     sf.outreach_stage,
 
-    --LEAD LOGIC:
-    salesforce_id is not null as is_lead_in_salesforce,
-    NOT is_lead_in_salesforce as is_new_prospective_lead
-
-
-    --LOGIC:
-    --is_in_salesforce
-
-    --and not is_deleted_in_salesforce
+    /* If a lead is not yet in Salesforce, it is a new prospective lead, and should be sent to sales to add to salesforce. */ 
+    salesforce_id is null as is_new_prospective_lead
 
     from all_prospective_leads l 
     left join {{ref('stg_salesforce_leads')}} sf 

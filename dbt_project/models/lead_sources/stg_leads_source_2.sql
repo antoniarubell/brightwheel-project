@@ -3,7 +3,7 @@ with first_file_date as (
         primary_key,
         file_name,
         file_date
-    from {{ref('base_leads_source_1')}}
+    from {{ref('base_leads_source_2')}}
     qualify row_number() over (partition by primary_key order by file_date ASC) = 1
 ),
 
@@ -12,31 +12,27 @@ joined as (
 
     select
         --fields needed for dim_prospective_leads:
-        'source_1' AS source_name,
+        'source_2' AS source_name,
         base.primary_key as source_id,
         base.phone_address_key,
         base.file_name,
         base.file_date,
-        base.name as company_name,
-        base.address as street_address,
-        null as city,
+        base.company as company_name,
+        base.address1 as street_address,
+        base.city,
         base.state,
-        base.postal_code,
+        base.zip as postal_code,
         base.phone,
         ff.file_date as first_received_file_date,
         ff.file_name as first_received_file_name,
 
 
         --other source-specific fields:
-        base.credential_type,
-        base.credential_number,
-        base.status,
-        base.expiration_date,
-        base.disciplinary_action,
-        base.county,
-        base.first_issue_date
+        base.type_license,
+        base.star_level,
+        base.accepts_subsidy = 'Accepts Subsidy' as accepts_subsidy,
 
-from {{ref('base_leads_source_1')}} base 
+from {{ref('base_leads_source_2')}} base 
 left join first_file_date ff 
     on ff.primary_key = base.primary_key
 )

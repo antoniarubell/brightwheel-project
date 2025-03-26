@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: base_leads_source_1
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique
+      - name: file_name 
+        tests:
+          - not_null
+  - name: base_leads_source_2
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique
+      - name: file_name 
+        tests:
+          - not_null
+  - name: base_leads_source_3
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique
+      - name: file_name 
+        tests:
+          - not_null
+  - name: stg_leads_source_1
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique
+  - name: stg_leads_source_2
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique
+  - name: stg_leads_source_3
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: primary_key
+        tests:
+          - unique

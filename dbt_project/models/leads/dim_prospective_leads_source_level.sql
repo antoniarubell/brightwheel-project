@@ -11,8 +11,7 @@ with all_prospective_leads as (
 
 select 
     --SOURCE IDENTIFIERS / METADATA
-    {{ dbt_utils.generate_surrogate_key(['l.primary_key',
-                                        'source_name']) }} AS source_lead_key,
+    {{ dbt_utils.generate_surrogate_key(['l.primary_key','source_name']) }} AS source_lead_key,
     l.source_name,
     l.source_id,
     l.contact_name,

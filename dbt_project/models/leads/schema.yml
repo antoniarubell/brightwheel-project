@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: dim_prospective_leads_source_level
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: source_lead_key
+        tests:
+          - unique
+          - not_null
+  - name: dim_prospective_leads
+    columns:
+      - name: phone
+        tests:
+          - not_null
+          - is_phone_number_valid
+      - name: phone_address_key
+        tests:
+          - unique
+          - not_null

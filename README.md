@@ -53,7 +53,7 @@ I made some assumptions in order to proceed:
 - If we do identify a new lead to load into Salesforce, I'm assuming we'll need to provide Sales team all the info to create the company profile. I don't think the `dim_prospective_leads` table can/should be the place for all of that relevant company metadata, but we should help streamline the process of building out that salesforce profile
 
 **Lead Analytics**:
-- I focused on building out the new prospective leads identification process, and supporting file/source analytics, in order to support Sales operations as a first priority. Next up, would be supporting analytics on Salesforce leads - ie. how long does it take for leads to move through statuses? What % are in each status week over week? 
+- I focused on building out the new prospective leads identification process in order to support Sales operations as a first priority. Next up, would be supporting analytics on Salesforce leads - ie. how long does it take for leads to move through statuses? What % are in each status week over week? 
 - We'll need historical lead status data to build trends / know which leads were in which status at different points in time. I'm not sure if Salesforce provides log/history tables? (Most ideal!) But we could consider DBT snapshotting
 
 **Testing / Validation**:

@@ -44,9 +44,6 @@ on each file's quality */
     school_year_only,
     evening_hours,
 
-    {{ dbt_utils.generate_surrogate_key(['file_name', 
-                                        'phone',
-                                        'address1']) }} AS primary_key,
-    {{ dbt_utils.generate_surrogate_key(['phone',
-                                        'address1']) }} AS phone_address_key
+    {{ dbt_utils.generate_surrogate_key(['file_name','phone','address1']) }} AS primary_key,
+    {{ dbt_utils.generate_surrogate_key(['phone','address1']) }} AS phone_address_key
 from {{source('sources','source_2')}}

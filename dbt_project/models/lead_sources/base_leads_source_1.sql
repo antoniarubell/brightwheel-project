@@ -23,9 +23,6 @@ on each file's quality */
     primary_contact_name,
     primary_contact_role,
 
-    {{ dbt_utils.generate_surrogate_key(['file_name', 
-                                        'phone',
-                                        'address']) }} AS primary_key,
-    {{ dbt_utils.generate_surrogate_key(['phone',
-                                        'address']) }} AS phone_address_key
+    {{ dbt_utils.generate_surrogate_key(['file_name','phone','address']) }} AS primary_key,
+    {{ dbt_utils.generate_surrogate_key(['phone','address']) }} AS phone_address_key
 from {{source('sources','source_1')}}
